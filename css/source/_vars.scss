@@ -1,0 +1,24 @@
+// ==========================================================================
+// `VARS `MIXINS etc
+// Setup the dynamic bits in here
+// ========================================================================== */
+
+// Colors:
+$midtone:  #ccc ;
+$midtone_l: #ccc;
+$midtone_d: #ccc;
+
+$brand_clr:     #ccc;
+$brand_clr_alt: #ccc;
+
+$text_clr:  '';
+
+// Breakpoints:
+$break_s:  '200px';
+$break_m: '500px' ;
+$break_l:  '800px';
+$break_lx: '960px';
+
+// Fonts:
+$fonts_base: arial, helvetica ;
+$fonts_brand: $fonts_base; 
