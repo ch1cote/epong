@@ -21,7 +21,7 @@
                                         name: signInName,
                                         gameStatus: 'waiting',
                                         wins: '0',
-                                        losses: '0'
+                                        losses: 0
                                                     }, function(error){
                                                         if(error) {
                                                             console.log(error);
@@ -46,6 +46,7 @@
                             var flData = snapshot.val();
                             var flID = snapshot.name();
                             var newPlayer = checkInBox.clone();
+                            newPlayer.attr('id', flID);
 
                             console.log(listCount);
                             //if position is 1 or 2 append to 
@@ -91,22 +92,40 @@
                               divObj.find('.js-checkout').on('click', function(){
                             var fbString = 'bbnb.firebaseio.com/EPingPong/'+divObj.data_id;
                             var curRef = new Firebase(fbString);
-                            divObj.finish = onComplete;
-                            curRef.remove(divObj.finish());
+                            curRef.remove();
                               });
                               //lose - moves to bottom of div
                               divObj.find('.js-lose').on('click', function(){
-                                $('.checkin-list').append($(this).parent());
+                             var fbString = 'bbnb.firebaseio.com/EPingPong/'+divObj.data_id;
+                            var curRef = new Firebase(fbString);
+                             var cLosses = flData.losses++; 
+                                 curRef.update({losses: cLosses});
                                 //later add feature to count losses
                               })
                                                             } 
                             clickInits(newPlayer);
  
 
-                              onComplete = function(){
-                               $(this).remove();
-                              }
+                           
                             });
+
+/* child removed */
+                            myRootRef.on('child_removed', function(snapshot) {
+                            //get data of child added store in var
+                            var flData = snapshot.val();
+                            var flID = snapshot.name();
+                            var selectDataId = "#"+flID;
+                            $(selectDataId).remove();
+                          });
+
+/* child changed*/
+                            myRootRef.on('child_changed', function(snapshot) {
+                            var flData = snapshot.val();
+                            var flID = snapshot.name();
+                            var theID = '#' + flID;
+                            $('.checkin-list').append($(theID));
+                            $(theID).find('.js-status').text('waiting with: ' + flData.losses + ' losses');
+});
 
 //some useful waiting list stuff
 
