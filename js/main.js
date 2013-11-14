@@ -52,11 +52,11 @@
                             //proper place
                             switch(listCount){
                                 case 0:
-                                flData.gameStatus = 'playing';
+                                flData.gameStatus = '';
                                 break;
 
                                 case 1:
-                                flData.gameStatus = 'playing';
+                                flData.gameStatus = '';
                                break;
 
                                 default:
@@ -85,18 +85,22 @@
                           //   curRef.remove(newPlayer.finish());
 
                           //     });
-                              clickCheckOut = function(divObj){
+                              clickInits = function(divObj){
+                            console.log('clickInits');
+                                //check outs - removes from dom and database
                               divObj.find('.js-checkout').on('click', function(){
                             var fbString = 'bbnb.firebaseio.com/EPingPong/'+divObj.data_id;
-                            console.log(flData);
                             var curRef = new Firebase(fbString);
-                          console.log(curRef);
                             divObj.finish = onComplete;
                             curRef.remove(divObj.finish());
-
                               });
+                              //lose - moves to bottom of div
+                              divObj.find('.js-lose').on('click', function(){
+                                $('.checkin-list').append($(this).parent());
+                                //later add feature to count losses
+                              })
                                                             } 
-                            clickCheckOut(newPlayer);
+                            clickInits(newPlayer);
  
 
                               onComplete = function(){
